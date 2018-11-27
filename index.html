@@ -131,25 +131,26 @@
             constructor(props){
             super(props);
             this.state = {
-                filter: this.props.data
+                filterAdv: this.props.data
                 }
             }
             componentWillReceiveProps(nextProps) {
                 let nextFilter = [...nextProps.data]
                 
-                filter.forEach((item, index) => {
+                filterAdv.forEach((item, index) => {
                     if(item.secText.toLowerCase().indexOf('adv') !== -1) {
                        item.secText = 'SPAM'
                         }
                     })
-                this.setState({filter: nextFilter})
+                this.setState({filterAdv: nextFilter})
               }
             renderNews = () => {
+                const {filterAdv} = this.state;
                 let newsTemplate = null;
-                const {filter} = this.state;
                 
-                if(filter.length){
-                newsTemplate = filter.map(function(item){
+                
+                if(filterAdv.length){
+                newsTemplate = filterAdv.map(function(item){
                     return <Article key={item.id} data={item}/>
                 })
                 } else {
@@ -158,13 +159,13 @@
                 return newsTemplate;
             }
             render() {
-                const{filter} = this.state
+                const{filterAdv} = this.state
                 return (
                     <div className="news">
                         {this.renderNews()}
                         {
-                            filter.length ? <strong>
-                                    All the news: {filter.length}
+                            filterAdv.length ? <strong>
+                                    All the news: {filterAdv.length}
                                     </strong>: null
                         }
                     </div>
