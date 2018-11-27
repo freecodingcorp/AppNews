@@ -128,9 +128,12 @@
             })
         }
         class News extends React.Component{
-            state = {
+            constructor(props){
+            super(props);
+            this.state = {
                 filter: this.props.data
                 }
+            }
             componentWillReceiveProps(nextProps) {
                 let nextFilter = [...nextProps.data]
                 
