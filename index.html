@@ -138,7 +138,7 @@
             let nextFilteredNews = [...props.data]
         
             nextFilteredNews.forEach((item, index) =>{
-            if(item.secText.toLowerCase().indexOf("advertisement") !== -1) {
+            if(item.secText.toLowerCase().indexOf("adv") !== -1) {
                item.secText = 'SPAM'
                }       
             })
