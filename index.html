@@ -128,13 +128,33 @@
             })
         }
         class News extends React.Component{
+                constructor(props){
+                super(props);
+                this.state = {
+                        filteredNews: this.props.data
+                    }
+                }
+         static getDerivedStateFromProps(props, state) {
+            let nextFilteredNews = [...props.data]
+        
+            nextFilteredNews.forEach((item, index) =>{
+            if(item.secText.toLowerCase().indexOf("advertisement") !== -1) {
+               item.secText = 'SPAM'
+               }       
+            })
+            return{
+                filteredNews: nextFilteredNews
+              }
+           }
+             
+             
              renderNews = () => {
-                const {data} = this.props;
+                const {filteredNews} = this.state;
                 let newsTemplate = null;
                 
                 
-                if(filterAdv.length){
-                newsTemplate = data.map(function(item){
+                if(filteredNews.length){
+                newsTemplate = filteredNews.map(function(item){
                     return <Article key={item.id} data={item}/>
                 })
                 } else {
@@ -143,13 +163,13 @@
                 return newsTemplate;
             }
             render() {
-                const{data} = this.props
+                const{filteredNews} = this.state
                 return (
                     <div className="news">
                         {this.renderNews()}
                         {
-                            data.length ? <strong>
-                                    All the news: {data.length}
+                            filteredNews.length ? <strong>
+                                    All the news: {filteredNews.length}
                                     </strong>: null
                         }
                     </div>
